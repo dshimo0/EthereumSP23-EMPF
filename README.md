@@ -25,7 +25,7 @@ https://goerli.etherscan.io/address/0x16efa394defa11f79c43b5543c7397f77b9b4d27
 
 O frontend do projeto está publicamente acessível através do seguinte link:
 
-[Link para o frontend](https://exemplo.com)
+[Link para o frontend](https://143.244.191.92)
 
 ## Vídeo de Apresentação
 
@@ -35,8 +35,8 @@ A apresentação do projeto e a demonstração da solução estão disponíveis 
 
 ## Links para Submissão
 
-- Link da dApp: [dApp](https://dapp.exemplo.com)
-- Link do Github: [Github](https://github.com/exemplo)
+- Link da dApp: [dApp](https://143.244.191.92)
+- Link do Github: [Github](https://github.com/dshimo0/EthereumSP23-EMPF)
 - Link do vídeo: [Vídeo]( https://youtu.be/ljIEyzog8co)
 
 ## Requisitos
