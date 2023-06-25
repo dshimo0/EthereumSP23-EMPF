@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <h2>Tomador</h2>
+    <button onclick="pedirEmprestimo()">Pedir empréstimo</button>
+    <button onclick="pagarEmprestimo()">Pagar empréstimo</button>
+    <p id="saldoTomador"></p>
+
+    <h2>Investidor</h2>
+    <button onclick="investir()">Investir</button>
+    <p id="saldoInvestidor"></p>
+
+    <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js@1.5.2/dist/web3.min.js"></script>
+    <script>
+        if (window.ethereum) {
+            window.web3 = new Web3(ethereum);
+            ethereum.enable();
+        }
+        const enderecoTomador = '0x21270E7A5F96eafD13f6f78ec9d4c4E5a7fe2907'; 
+        const enderecoInvestidor = '0x1d0aC870752Bbb53Be92a9F5104B77dDA71B483a';
+        const enderecoContratoEmprestimo = '0x8523b6F1d8EAFca7a242cdE18c29951774899F69';
+        const abiEmprestimo = [[{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"address","name":"spender","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Approval","type":"event"},{"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"approve","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"checkOverdueLoans","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"subtractedValue","type":"uint256"}],"name":"decreaseAllowance","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"addedValue","type":"uint256"}],"name":"increaseAllowance","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint256","name":"loanId","type":"uint256"},{"indexed":true,"internalType":"address","name":"borrower","type":"address"},{"indexed":true,"internalType":"address","name":"lender","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"LoanCreated","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint256","name":"loanId","type":"uint256"}],"name":"LoanPaid","type":"event"},{"inputs":[{"internalType":"uint256","name":"loanId","type":"uint256"}],"name":"payLoan","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"redeem","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"register","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"lender","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"requestLoan","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"transfer","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Transfer","type":"event"},{"inputs":[{"internalType":"address","name":"sender","type":"address"},{"internalType":"address","name":"recipient","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"transferFrom","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"user","type":"address"}],"name":"UserRegistered","type":"event"},{"stateMutability":"payable","type":"receive"},{"inputs":[{"internalType":"address","name":"owner","type":"address"},{"internalType":"address","name":"spender","type":"address"}],"name":"allowance","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"account","type":"address"}],"name":"balanceOf","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"blockedAccounts","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"decimals","outputs":[{"internalType":"uint8","name":"","type":"uint8"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"EMPF_TO_ETH","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"INITIAL_SUPPLY","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"LOAN_DURATION","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"LOAN_FEE","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"LOAN_INTEREST","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"loans","outputs":[{"internalType":"uint256","name":"amount","type":"uint256"},{"internalType":"uint256","name":"dueDate","type":"uint256"},{"internalType":"bool","name":"isPaid","type":"bool"},{"internalType":"address","name":"borrower","type":"address"},{"internalType":"address","name":"lender","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"name","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"registeredUsers","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"symbol","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"tokenInfo","outputs":[{"internalType":"string","name":"name","type":"string"},{"internalType":"string","name":"symbol","type":"string"},{"internalType":"uint8","name":"decimals","type":"uint8"},{"internalType":"uint256","name":"totalSupply","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"totalSupply","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"empfAmount","type":"uint256"}],"name":"transferempfToEth","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"pure","type":"function"}]];
+        const contratoEmprestimo = new web3.eth.Contract(abiEmprestimo, enderecoContratoEmprestimo);
+        async function pedirEmprestimo() {
+            const valor = 1;
+            await contratoEmprestimo.methods.pedirEmprestimo(valor).send({from: enderecoTomador});
+            atualizarSaldos();
+        }
+
+        async function pagarEmprestimo() {
+            const valor = 1;
+            await contratoEmprestimo.methods.pagarEmprestimo(valor).send({from: enderecoTomador});
+            atualizarSaldos();
+        }
+
+        async function investir() {
+            const valor = 1;
+            await contratoEmprestimo.methods.investir(valor).send({from: enderecoInvestidor});
+            atualizarSaldos();
+        }
+
+        async function atualizarSaldos() {
+            const saldoTomador = await web3.eth.getBalance(enderecoTomador);
+            document.getElementById('saldoTomador').innerText = `Saldo: ${web3.utils.fromWei(saldoTomador)} ETH`;
+
+            const saldoInvestidor = await web3.eth.getBalance(enderecoInvestidor);
+            document.getElementById('saldoInvestidor').innerText = `Saldo: ${web3.utils.fromWei(saldoInvestidor)} ETH`;
+        }
+                window.onload = atualizarSaldos;
+    </script>
+</body>
+</html>
